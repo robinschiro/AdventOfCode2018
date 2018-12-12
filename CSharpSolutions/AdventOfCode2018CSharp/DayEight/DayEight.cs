@@ -12,6 +12,7 @@ namespace AdventOfCode2018CSharp
         {
             public int[] Metadata;
             public Node[] Children;
+            public int Value;
         }
 
         public void RunSolution()
@@ -20,7 +21,8 @@ namespace AdventOfCode2018CSharp
 
             var treeCreationResult = CreateTree(input, 0);
 
-            Console.WriteLine(SumMetadata(treeCreationResult.Item1));
+            Console.WriteLine("Part 1 Solution: " + SumMetadata(treeCreationResult.Item1));
+            Console.WriteLine("Part 2 Solution: " + FindValue(treeCreationResult.Item1));
         }
 
         public static int[] ParseInput()
@@ -61,6 +63,33 @@ namespace AdventOfCode2018CSharp
         public static int SumMetadata(Node head)
         {
             return head.Metadata.Sum() + head.Children.Sum(child => SumMetadata(child));
+        }
+
+        public static int FindValue(Node head)
+        {
+            if (0 != head.Value)
+            {
+                return head.Value;
+            }
+
+            if (0 == head.Children.Length)
+            {
+                head.Value = head.Metadata.Sum();
+                return head.Value;
+            }
+
+            int value = 0;
+            foreach (int entry in head.Metadata)
+            {
+                int index = entry - 1;
+                if (index < head.Children.Length)
+                {
+                    value += FindValue(head.Children[index]);
+                }
+            }
+
+            head.Value = value;
+            return value;
         }
     }
 }
