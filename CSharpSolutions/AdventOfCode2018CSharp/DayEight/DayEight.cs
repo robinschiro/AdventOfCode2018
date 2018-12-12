@@ -10,24 +10,57 @@ namespace AdventOfCode2018CSharp
     {
         public class Node
         {
-            int numMetadata;
-            int[] metadata;
-            int numChildren;
-            Node[] children;
+            public int[] Metadata;
+            public Node[] Children;
         }
 
         public void RunSolution()
         {
-            CreateTree();
+            int[] input = ParseInput();
+
+            var treeCreationResult = CreateTree(input, 0);
+
+            Console.WriteLine(SumMetadata(treeCreationResult.Item1));
         }
 
-        public static Node CreateTree()
+        public static int[] ParseInput()
         {
-            Node root = new Node();
             string inputStream = File.ReadAllText(@"..\..\..\DayEight\input.txt");
             int[] input = inputStream.Split(' ').Select<string, int>(c => Convert.ToInt32(c)).ToArray();
 
-            return root;
+            return input;
+        }
+
+        public static Tuple<Node, int> CreateTree(int[] input, int index)
+        {
+            Node head = new Node();
+            int curIndex = index;
+
+            // Get num children and num metadata.
+            head.Children = new Node[input[curIndex]];
+            curIndex += 1;
+            head.Metadata = new int[input[curIndex]];
+            curIndex += 1;
+
+            for (int i = 0; i < head.Children.Length; i++)
+            {
+                Tuple<Node, int> childCreationResult = CreateTree(input, curIndex);
+                head.Children[i] = childCreationResult.Item1;
+                curIndex = childCreationResult.Item2;
+            }
+
+            for (int i = 0; i < head.Metadata.Length; i++ )
+            {
+                head.Metadata[i] = input[curIndex];
+                curIndex += 1;
+            }
+
+            return new Tuple<Node, int>(head, curIndex);
+        }
+
+        public static int SumMetadata(Node head)
+        {
+            return head.Metadata.Sum() + head.Children.Sum(child => SumMetadata(child));
         }
     }
 }
