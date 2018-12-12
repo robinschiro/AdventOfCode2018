@@ -7,7 +7,7 @@ namespace AdventOfCode2018CSharp
     {
         static void Main(string[] args)
         {
-            DayProblem problem = new DayNine();
+            DayProblem problem = new DayEight();
 
             problem.RunSolution();
 
