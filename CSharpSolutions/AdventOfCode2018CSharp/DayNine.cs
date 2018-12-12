@@ -29,7 +29,6 @@ namespace AdventOfCode2018CSharp
         {
             long highScore = FindHighScoreWithLinkedList(30, 5807 , 23, 7);
             Console.WriteLine($"Answer: {highScore}");
-            Console.ReadLine();
         }
 
         public long FindHighScoreAnalytical(long numPlayers, long highestMarble, long scoreTrigger, long shiftBehind)

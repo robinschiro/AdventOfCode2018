@@ -8,7 +8,10 @@ namespace AdventOfCode2018CSharp
         static void Main(string[] args)
         {
             DayProblem problem = new DayNine();
+
             problem.RunSolution();
-        }        
+
+            Console.ReadLine();
+        }
     }
 }
