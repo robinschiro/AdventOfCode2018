@@ -27,7 +27,7 @@ namespace AdventOfCode2018CSharp
 
         public static int[] ParseInput()
         {
-            string inputStream = File.ReadAllText(@"..\..\..\DayEight\input.txt");
+            string inputStream = File.ReadAllText(@"..\..\DayEight\input.txt");
             int[] input = inputStream.Split(' ').Select<string, int>(c => Convert.ToInt32(c)).ToArray();
 
             return input;
